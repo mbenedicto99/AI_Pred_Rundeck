@@ -1,0 +1,13 @@
+# Python / gerais
+__pycache__/
+*.py[cod]
+.env
+.venv/
+venv/
+.ipynb_checkpoints/
+.DS_Store
+.idea/
+.vscode/
+dist/
+build/
+*.log

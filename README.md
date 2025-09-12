@@ -53,7 +53,7 @@ AI_Pred_Rundeck/
 ```
 ---
 
-## 🛠️ Pipeline (alto nível)
+## 🛠️ Pipeline (HLD)
 
 ```mermaid
 graph TD

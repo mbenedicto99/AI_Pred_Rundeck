@@ -33,18 +33,23 @@ Projeto para prever comportamento de métricas operacionais e **detectar anomali
 ## 🧰 Estrutura
 ```bash
 AI_Pred_Rundeck/
-├─ data/          # CSVs de entrada (não versionar dados sensíveis)
-├─ notebooks/     # Explorações iniciais
-├─ src/
-│  ├─ etl.py          # limpeza/normalização
-│  ├─ features.py     # lags, dummies, feriados
-│  ├─ train_prophet.py# treino/forecast Prophet
-│  ├─ train_arima.py  # treino/forecast ARIMA
-│  └─ anomalies.py    # regras de detecção
-├─ jobs/
-│  └─ rundeck.yaml    # definição do job (agendamento/steps)
-├─ outputs/       # previsões e relatórios
-└─ README.md
+├── data
+│   └── dados.csv
+├── docs
+│   └── exec.txt
+├── jobs
+│   └── rundeck.yaml
+├── notebooks
+│   └── AI_Pred_Rundeck_Pipeline.ipynb
+├── outputs
+├── README.md
+├── run_pipeline.sh
+└── src
+    ├── anomalies.py
+    ├── etl.py
+    ├── features.py
+    ├── train_arima.py
+    └── train_prophet.py
 ```
 ---
 

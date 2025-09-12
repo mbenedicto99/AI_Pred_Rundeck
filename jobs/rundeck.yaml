@@ -1,0 +1,107 @@
+- defaultTab: nodes
+  description: "Executa o pipeline (ETL → Features → Prophet/ARIMA → Anomalias) do projeto AI_Pred_Rundeck."
+  executionEnabled: true
+  group: AI_Pred_Rundeck/Jobs
+  loglevel: INFO
+  name: Run Pipeline - AI_Pred_Rundeck
+  nodeFilterEditable: false
+  notification:
+    onfailure:
+      - email:
+          recipients: "sre@exemplo.com,ops@exemplo.com"
+    onsuccess:
+      - email:
+          recipients: "data@exemplo.com"
+  nodefilters:
+    filter: "tags: bastion"
+  multipleExecutions: false
+  scheduleEnabled: true
+  schedule:
+    time:
+      hour: "07"
+      minute: "00"
+      seconds: "00"
+    month:
+      month: "*"
+    dayofmonth:
+      day: "*"
+    year:
+      year: "*"
+    weekday:
+      day: "*"
+  timeout: "1h"
+  uuid: "7e0d5f9a-3a86-4f78-9f6b-6a6a1c9b9d10"
+  options:
+    - name: repo_dir
+      description: "Diretório do projeto no nó alvo."
+      required: true
+      default: "/opt/AI_Pred_Rundeck"
+    - name: horizon
+      description: "Horizonte de previsão (períodos futuros)."
+      required: true
+      default: "30"
+    - name: freq
+      description: "Frequência da série (D=diária, H=horária)."
+      required: true
+      values:
+        - D
+        - H
+      default: "D"
+    - name: install_sys_deps
+      description: "Instalar dependências de sistema (build-essential/venv) se necessário?"
+      required: true
+      values:
+        - "1"
+        - "0"
+      default: "1"
+    - name: python_bin
+      description: "Binário do Python."
+      required: true
+      default: "python3"
+    - name: venv_dir
+      description: "Diretório da virtualenv."
+      required: true
+      default: ".venv"
+    - name: data_file
+      description: "Caminho do CSV de dados (se vazio, o script gera um exemplo)."
+      required: false
+      default: "data/dados.csv"
+  sequence:
+    keepgoing: false
+    strategy: node-first
+    commands:
+      - description: "Validar diretório e executar pipeline"
+        script: |
+          set -euo pipefail
+
+          echo "➡️  Entrando no diretório do projeto: ${option.repo_dir}"
+          cd "${option.repo_dir}"
+
+          # Exporta variáveis para o script
+          export HORIZON="${option.horizon}"
+          export FREQ="${option.freq}"
+          export INSTALL_SYS_DEPS="${option.install_sys_deps}"
+          export PYTHON_BIN="${option.python_bin}"
+          export VENV_DIR="${option.venv_dir}"
+
+          # DATA_FILE é opcional; se não existir usa padrão do script
+          if [ -n "${option.data_file:-}" ]; then
+            export DATA_FILE="${option.data_file}"
+          fi
+
+          # Confere script principal
+          if [ ! -x "./run_pipeline.sh" ]; then
+            if [ -f "./run_pipeline.sh" ]; then
+              chmod +x ./run_pipeline.sh
+            else
+              echo "❌ Arquivo run_pipeline.sh não encontrado em ${option.repo_dir}"
+              exit 1
+            fi
+          fi
+
+          echo "🚀 Executando pipeline..."
+          ./run_pipeline.sh
+
+          echo "📦 Artefatos gerados em ./outputs/"
+          ls -lh ./outputs || true
+

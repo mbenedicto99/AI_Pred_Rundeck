@@ -29,12 +29,13 @@ set -euo pipefail
 ############################
 # CONFIGURAÇÕES DO USUÁRIO #
 ############################
-PYTHON_BIN="${PYTHON_BIN:-python3}"      # binário do Python
-VENV_DIR="${VENV_DIR:-.venv}"            # pasta da "caixinha" Python
-DATA_DIR="${DATA_DIR:-data}"             # onde ficam os dados de entrada
-OUT_DIR="${OUT_DIR:-outputs}"            # onde ficarão os resultados
-SRC_DIR="${SRC_DIR:-src}"                # onde ficam os códigos .py
-DATA_FILE="${DATA_FILE:-${DATA_DIR}/dados.csv}"
+DIR_BASE="/home/mbenedicto/Documents/CanopusAI/AI_Pred_Rundeck"
+PYTHON_BIN="${/:-python3}"      # binário do Python
+VENV_DIR="${/:-.venv}"            # pasta da "caixinha" Python
+DATA_DIR="${data/:-data}"             # onde ficam os dados de entrada
+OUT_DIR="${output/:-outputs}"            # onde ficarão os resultados
+SRC_DIR="${src/:-src}"                # onde ficam os códigos .py
+DATA_FILE="${data/:-data/dados.csv}"
 
 # Horizonte de previsão (quantos períodos no futuro vamos prever)
 HORIZON="${HORIZON:-30}"

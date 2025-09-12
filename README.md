@@ -34,15 +34,15 @@ Projeto para prever comportamento de métricas operacionais e **detectar anomali
 
 ```mermaid
 graph TD
-  A[Coleta de dados (CSV/API/DB)] --> B[ETL & Qualidade]
-  B --> C[Feature Engineering<br/>Lags, feriados (BR), sazonalidade]
-  C --> D{Treino}
-  D --> E[ARIMA/SARIMA]
-  D --> F[Prophet]
-  E --> G[Backtesting & Métricas]
+  A["Coleta de dados (CSV/API/DB)"] --> B["ETL & Qualidade"]
+  B --> C["Feature Engineering<br/>Lags, feriados (BR), sazonalidade"]
+  C --> D{"Treino"}
+  D --> E["ARIMA/SARIMA"]
+  D --> F["Prophet"]
+  E --> G["Backtesting & Métricas"]
   F --> G
-  G --> H[Previsão]
-  H --> I[Detecção de Anomalias<br/>resíduos · intervalos · ESD]
-  I --> J[Alertas/Relatórios]
-  J --> K[Rundeck Job (agendado)]
+  G --> H["Previsão"]
+  H --> I["Detecção de Anomalias<br/>resíduos · intervalos · ESD"]
+  I --> J["Alertas/Relatórios"]
+  J --> K["Rundeck Job (agendado)"]
 

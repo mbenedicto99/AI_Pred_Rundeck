@@ -1,0 +1,30 @@
+📊 Interpretação inicial
+
+Sazonalidade forte → Prophet costuma capturar bem com componentes semanais/anuais e feriados.
+
+Mudanças de regime (deploys, picos event-driven) → ajustar changepoints e regressoras.
+
+Datas especiais (fechamento do mês, campanhas) → criar dummies e/ou regressoras externas.
+
+⏲️ Operação com Rundeck (visão)
+
+Agendar execução (ex.: diário às 07:00 BRT).
+
+Steps: ETL → Features → Treino/Forecast → Anomalias → Publicar relatório/alertas.
+
+Artefatos: CSV/HTML com pontos anômalos + gráfico simples.
+
+AI_Pred_Rundeck/
+├─ data/                 # CSVs de entrada (não versionar dados sensíveis)
+├─ notebooks/            # Explorações iniciais
+├─ src/
+│  ├─ etl.py             # limpeza/normalização
+│  ├─ features.py        # lags, dummies, feriados
+│  ├─ train_prophet.py   # treino/forecast Prophet
+│  ├─ train_arima.py     # treino/forecast ARIMA
+│  └─ anomalies.py       # regras de detecção
+├─ jobs/
+│  └─ rundeck.yaml       # definição do job (agendamento/steps)
+├─ outputs/              # previsões e relatórios
+└─ README.md
+

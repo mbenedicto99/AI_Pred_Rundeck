@@ -30,6 +30,23 @@ Projeto para prever comportamento de métricas operacionais e **detectar anomali
 
 ---
 
+## 🧰 Estrutura
+AI_Pred_Rundeck/
+├─ data/                 # CSVs de entrada (não versionar dados sensíveis)
+├─ notebooks/            # Explorações iniciais
+├─ src/
+│  ├─ etl.py             # limpeza/normalização
+│  ├─ features.py        # lags, dummies, feriados
+│  ├─ train_prophet.py   # treino/forecast Prophet
+│  ├─ train_arima.py     # treino/forecast ARIMA
+│  └─ anomalies.py       # regras de detecção
+├─ jobs/
+│  └─ rundeck.yaml       # definição do job (agendamento/steps)
+├─ outputs/              # previsões e relatórios
+└─ README.md
+
+---
+
 ## 🛠️ Pipeline (alto nível)
 
 ```mermaid
@@ -45,4 +62,3 @@ graph TD
   H --> I["Detecção de Anomalias<br/>resíduos · intervalos · ESD"]
   I --> J["Alertas/Relatórios"]
   J --> K["Rundeck Job (agendado)"]
-
